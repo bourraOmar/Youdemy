@@ -1,6 +1,6 @@
 <?php
 
-  class connect{
+  class BDconnect {
     protected $dsn = "mysql:host=localhost; dbname=youdemy";
     protected $user = 'root';
     protected $password = "";
