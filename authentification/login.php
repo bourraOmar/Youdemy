@@ -22,78 +22,165 @@ if (empty($_SESSION['id_role'])) {
   }
 ?>
 
-
   <!DOCTYPE html>
   <html lang="en">
 
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login Form</title>
+    <title>Login | Education</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
   </head>
 
-  <body class="bg-gray-50">
-    <div class="min-h-screen flex">
-      <!-- Left column - Login Form -->
-      <div class="flex-1 flex items-center justify-center">
-        <div class="max-w-md w-full p-6">
-          <div class="mb-8">
-            <div class="text-4xl mb-6">👋</div>
-            <h1 class="text-2xl font-semibold mb-2">Sign in to your account</h1>
-            <p class="text-sm text-gray-600">
-              Not a member?
-              <a href="signUp.php" class="text-indigo-600 hover:text-indigo-500">Sign up</a>
-            </p>
-          </div>
-
-          <form class="space-y-4" method="post">
-            <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
-              <input type="email" name="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" require>
-            </div>
-
-            <div>
-              <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-              <input type="password" name="password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" require>
-            </div>
-
-            <div class="flex items-center justify-between">
-              <div class="flex items-center">
-                <input type="checkbox" id="remember" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
-              </div>
-              <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-              Sign in
-            </button>
-
-            <div class="relative my-6">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-300"></div>
-              </div>
-              <div class="relative flex justify-center text-sm">
-                <span class="px-2 bg-gray-50 text-gray-500">Or continue with</span>
-              </div>
-            </div>
-
-          </form>
+  <body class="bg-gray-100">
+    <!-- Preloader -->
+    <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
+      <div class="preloader-inner relative">
+        <div class="preloader-circle animate-spin rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+        <div class="preloader-img absolute inset-0 flex justify-center items-center">
+          <img src="assets/img/logo/loder.png" alt="Loading..." class="h-8">
         </div>
       </div>
-
-
-      <!-- Right column - Image -->
-      <div class="hidden lg:block flex-1 bg-gray-100">
-        <img
-          src="../img/car1.jpg"
-          alt="Workspace setup with MacBook"
-          class="w-full h-[100vh] object-cover">
-      </div>
-
-
     </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="logo">
+            <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+          </div>
+          <nav class="hidden md:flex space-x-8 items-center">
+            <a href="index.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
+            <a href="courses.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
+            <a href="about.html" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
+            <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Blog</a>
+            <a href="contact.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
+            <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
+            <a href="login.html" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+          </nav>
+          <div class="md:hidden">
+            <button class="mobile-menu-button">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Hero Section -->
+      <section class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-24">
+        <div class="container mx-auto px-6 text-center">
+          <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Welcome Back</h1>
+          <p class="text-xl mb-8 animate__animated animate__fadeInUp">Login to access your courses and continue learning.</p>
+        </div>
+      </section>
+
+      <!-- Login Form Section -->
+      <section class="container mx-auto px-6 py-16">
+        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
+          <h2 class="text-3xl font-bold mb-8 text-center">Login</h2>
+          <form class="space-y-6">
+            <div>
+              <label for="email" class="block text-gray-700 mb-2">Email</label>
+              <input type="email" id="email" placeholder="Enter your email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+            </div>
+            <div>
+              <label for="password" class="block text-gray-700 mb-2">Password</label>
+              <input type="password" id="password" placeholder="Enter your password" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input type="checkbox" id="remember" class="mr-2">
+                <label for="remember" class="text-gray-700">Remember me</label>
+              </div>
+              <a href="#" class="text-blue-500 hover:text-blue-600">Forgot password?</a>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300">Login</button>
+          </form>
+          <div class="mt-6 text-center">
+            <p class="text-gray-600">Don't have an account? <a href="#" class="text-blue-500 hover:text-blue-600">Sign up</a></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <img src="assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
+            <p class="text-gray-400">The automated process starts as soon as your clothes go into the machine.</p>
+            <div class="flex space-x-4 mt-4">
+              <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4">Our Solutions</h4>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-white">Design & Creatives</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Telecommunication</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Restaurant</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Programing</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Architecture</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4">Support</h4>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-white">Design & Creatives</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Telecommunication</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Restaurant</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Programing</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Architecture</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4">Company</h4>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-white">Design & Creatives</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Telecommunication</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Restaurant</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Programing</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white">Architecture</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+          <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-blue-500 hover:text-blue-400">Colorlib</a></p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll Up Button -->
+    <div id="back-top" class="fixed bottom-4 right-4">
+      <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+        <i class="fas fa-level-up-alt"></i>
+      </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script>
+      // Preloader
+      window.addEventListener('load', function() {
+        document.getElementById('preloader-active').style.display = 'none';
+      });
+
+      // Mobile Menu
+      document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+        document.querySelector('nav').classList.toggle('hidden');
+      });
+    </script>
   </body>
 
   </html>
