@@ -1,26 +1,4 @@
-<?php
 
-session_start();
-
-
-require_once '../classes/connection.php';
-require_once '../classes/utilisateur.php';
-
-if (empty($_SESSION['id_role'])) {
-
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $user = new User();
-
-    if ($user->logIn($email, $password)) {
-      exit();
-    } else {
-      $error_message = "Invalid email or password.";
-    }
-  }
-?>
 
   <!DOCTYPE html>
   <html lang="en">
@@ -58,7 +36,7 @@ if (empty($_SESSION['id_role'])) {
             <a href="about.html" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
             <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Blog</a>
             <a href="contact.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
-            <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
+            <a href="../authentification/sign up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
             <a href="login.html" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
           </nav>
           <div class="md:hidden">
@@ -184,13 +162,3 @@ if (empty($_SESSION['id_role'])) {
   </body>
 
   </html>
-
-<?php
-} else {
-  if ($_SESSION['id_role'] == 1) {
-    header('Location: dashboard.php');
-  } else {
-    header('Location:index.php');
-  }
-}
-?>

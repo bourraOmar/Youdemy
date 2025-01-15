@@ -27,13 +27,12 @@
                     <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="courses.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
-                    <a href="about.html" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
-                    <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Blog</a>
-                    <a href="contact.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
+                    <a href="index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
+                    <a href="../pages/about.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
+                    <a href="../pages/about.php" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
+                    <a href="../pages/contact.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
                     <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-                    <a href="login.html" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                    <a href="../authentification/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
                 </nav>
                 <div class="md:hidden">
                     <button class="mobile-menu-button">

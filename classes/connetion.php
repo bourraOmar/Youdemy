@@ -1,19 +1,32 @@
+
 <?php
 
-  class BDconnect {
-    protected $dsn = "mysql:host=localhost; dbname=youdemy";
-    protected $user = 'root';
-    protected $password = "";
+class Dbconnection {
+    private static $instance = null;
     private $pdo;
 
-    function PDOconnect(){
-      try{
-        $this->pdo = new PDO($this->dsn, $this->user, $this->password);
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $this->pdo; 
-      }
-      catch(PDOException $e){
-        die("error : " . $e->getMessage());
-      }
+    private function __construct($dsn, $username, $password){
+        try{
+            $this->pdo = new PDO($dsn, $username, $password);
+        }
+        catch(PDOException $e){
+            throw new Exception('Connection unsuccessfully!' . $e->getMessage());
+        }
     }
-  }
+
+    static function getInstance($dsn = null, $username = null, $password = null){
+        if(self::$instance == null){
+            $dsn = $dsn ?? 'mysql:host=localhost;dbname=youdemy';
+            $username = $username ?? 'root';
+            $password = $password ?? '';
+            self::$instance = new Dbconnection($dsn, $username, $password);
+        }
+        return self::$instance;
+    }
+
+    function getConnection(){
+        return $this->pdo;
+    }
+}
+
+?>

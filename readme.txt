@@ -1,213 +1,303 @@
 <?php
-class Database {
-    private static $instance = null;
-    private $pdo;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-    private function __construct($dsn, $username, $password) {
-        try {
-            $this->pdo = new PDO($dsn, $username, $password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            error_log("Database connection error: " . $e->getMessage());
-            throw new Exception("Database connection failed.");
-        }
+if (!empty($_SESSION)) {
+    header('Location: ../index.php');
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation bar -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-purple-600">YouDemy</span>
+                </div>
+                <ul class="flex gap-9">
+                    <a href="../index.php"><li>Home</li></a>
+                    <a href="../pages/cours.php"><li>Cours</li></a>
+                </ul>
+                
+                <div class="flex items-center space-x-4">
+                <a href="../pages/login.php"><button class="text-purple-700 px-4 py-2 rounded-md">Login</button></a>
+                <a href="../pages/sign_up.php"><button class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">sign up</button></a>
+                </div>
+                
+            </div>
+        </div>
+    </nav>
+
+    <main class="min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="max-w-md w-full space-y-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold">Welcome Back</h2>
+                <p class="mt-2 text-gray-600">Please login to your account</p>
+            </div>
+            
+            <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow" method="post" action="../Handling/AuthHandl.php">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" name="password" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                </div>
+
+                <button type="submit" name="signinsubmit" class="w-full bg-primary py-2 px-4 border border-transparent rounded-md text-sm font-medium btn-hover focus:outline-none bg-purple-600 hover:bg-purple-700">
+                    Log In
+                </button>
+
+                <div class="text-center text-sm text-gray-600">
+                    Not registered yet? 
+                    <a href="../pages/sign_up.php" class="font-medium text-purpel-600 hover:text-purpel-500">Create an account</a>
+                </div>
+            </form>
+            <?php
+
+    if (isset($_SESSION['message'])) {
+        $message = $_SESSION['message'];
+        $type = $message['type'];
+        $text = $message['text'];
+
+        echo "
+            <script>
+                Swal.fire({
+                    icon: '$type',
+                    title: '$type',
+                    text: '$text',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        ";
+
+        unset($_SESSION['message']);
     }
+    ?>
+        </div>
+    </main>
+</body>
+</html>
 
-    public static function getInstance($dsn = null, $username = null, $password = null) {
-        if (self::$instance === null) {
-            $dsn = $dsn ?? 'mysql:host=localhost;dbname=your_database_name';
-            $username = $username ?? 'your_username';
-            $password = $password ?? 'your_password';
-            self::$instance = new Database($dsn, $username, $password);
-        }
-        return self::$instance;
+
+
+handler
+
+
+
+<?php
+session_start();
+
+require_once '../classes/user.php';
+
+if(isset($_POST['Createacc'])){
+try{
+    if($_POST['Roleselect'] == 3){
+        User::signup($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['Roleselect'], $_POST['password'], 'Active');
+        $_SESSION['message'] = [
+            'type' => 'success',
+            'text' => 'Account created successfully! You can now login.'
+        ];
+        header('Location: ../pages/login.php');
+        exit();
+    } else {
+        User::signup($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['Roleselect'], $_POST['password'], 'waiting');
+        $_SESSION['message'] = [
+            'type' => 'info',
+            'text' => 'Account created successfully, but is awaiting approval.'
+        ];
+        header('Location: ../index.php');
+        exit();
     }
-
-    public function getConnection() {
-        return $this->pdo;
+} catch (Exception $e) {
+        $_SESSION['message'] = [
+            'type' => 'error',
+            'text' => 'An unexpected error occurred. Please try again.'
+        ];
+        header('Location: ../pages/sign_up.php');
+        exit();
     }
 }
 
-class User {
-    private $id;
-    private $nom;
-    private $prenom;
-    private $email;
-    private $passwordHash;
-
-    public function __construct($id, $nom, $prenom, $email, $passwordHash = null) {
-        $this->id = $id;
-        $this->nom = $nom;
-        $this->prenom = $prenom;
-        $this->email = $email;
-        $this->passwordHash = $passwordHash;
-    }
-
-    public function __toString() {
-        return $this->nom . " " . $this->prenom;
-    }
-
-    // Getters
-    public function getId() { return $this->id; }
-    public function getNom() { return $this->nom; }
-    public function getPrenom() { return $this->prenom; }
-    public function getEmail() { return $this->email; }
-
-    // Password hashing method
-    private function setPasswordHash($password) {
-        $this->passwordHash = password_hash($password, PASSWORD_BCRYPT);
-    }
-
-    // Save user to the database
-    public function save() {
-        $db = Database::getInstance()->getConnection();
-        try {
-            if ($this->id) {
-                // Update user
-                $stmt = $db->prepare("UPDATE users SET nom = :nom, prenom = :prenom, email = :email WHERE id = :id");
-                $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
-                $stmt->bindParam(':nom', $this->nom, PDO::PARAM_STR);
-                $stmt->bindParam(':prenom', $this->prenom, PDO::PARAM_STR);
-                $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
-                $stmt->execute();
-            } else {
-                // Insert new user
-                $stmt = $db->prepare("INSERT INTO users (nom, prenom, email, password) VALUES (:nom, :prenom, :email, :password)");
-                $stmt->bindParam(':nom', $this->nom, PDO::PARAM_STR);
-                $stmt->bindParam(':prenom', $this->prenom, PDO::PARAM_STR);
-                $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
-                $stmt->bindParam(':password', $this->passwordHash, PDO::PARAM_STR);
-                $stmt->execute();
-                $this->id = $db->lastInsertId(); // Set the new user ID
+if (isset($_POST['signinsubmit'])) {
+    try {
+        $user = User::signin($_POST['email'], $_POST['password']);
+        
+        if ($user->getStatus() === 'waiting') {
+            $_SESSION['message'] = [
+                'type' => 'info',
+                'text' => 'Your account is pending approval. Please contact support.'
+            ];
+            header('Location: ../pages/status_pending.php');
+            exit;
+        } elseif ($user->getStatus() === 'active') {
+            if($user->getrole() == 1){
+                $_SESSION['message'] = [
+                    'type' => 'success',
+                    'text' => 'Welcome Admin!'
+                ];
+                header('Location: ../pages/adminDashboard.php');
+                exit();
             }
-            return $this->id;
-        } catch (PDOException $e) {
-            error_log("Database error: " . $e->getMessage());
-            throw new Exception("An error occurred while saving the user.");
-        }
-    }
-    
-        // Search user by name
-    public function searchUserByName($name)
-    {
-        $db = Database::getInstance()->getConnection();
-
-        // Prepare the SQL query
-        $stmt = $db->prepare("SELECT * FROM users WHERE nom LIKE :name OR prenom LIKE :name");
-
-        // Bind the parameter for name search (using wildcards for partial match)
-        $stmt->bindValue(':name', '%' . $name . '%', PDO::PARAM_STR);
-
-        // Execute the query
-        $stmt->execute();
-
-        // Fetch all matching users
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Return an array of User objects
-        $users = [];
-        foreach ($results as $result) {
-            $users[] = new User(
-                $result['id'],
-                $result['nom'],
-                $result['prenom'],
-                $result['email'],
-                $result['password']
-            );
+            if($user->getrole() == 2){
+                $_SESSION['message'] = [
+                    'type' => 'success',
+                    'text' => 'Welcome Instructor!'
+                ];
+                header('Location: ../pages/prof_dashboard.php');
+                exit();
+            }
+            $_SESSION['message'] = [
+                'type' => 'success',
+                'text' => 'Welcome back!'
+            ];
+            header('Location: ../index.php');
+            exit;
+        } else {
+            $_SESSION['message'] = [
+                'type' => 'error',
+                'text' => 'Your account is not active. Please contact support.'
+            ];
+            header('Location: ../pages/status_banned.php');
+            exit();
         }
 
-        return $users;
-    }
-
-    // Get user by ID
-    public function getUserById($id)
-    {
-        $db = Database::getInstance()->getConnection();
-
-        // Prepare the SQL query
-        $stmt = $db->prepare("SELECT * FROM users WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            return new User(
-                $result['id'],
-                $result['nom'],
-                $result['prenom'],
-                $result['email'],
-                $result['password']
-            );
-        }
-
-        return null; // User not found
-    }
-
-    // Static method to search user by email
-    public static function findByEmail($email) {
-        $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            return new User($result['id'], $result['nom'], $result['prenom'], $result['email'], $result['password']);
-        }
-
-        return null;
-    }
-
-    // Method to register a new user (signup)
-    public static function signup($nom, $prenom, $email, $password) {
-    // Validate email format
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception("Invalid email format");
-    }
-
-    // Validate password length
-    if (strlen($password) < 6) {
-        throw new Exception("Password must be at least 6 characters long");
-    }
-
-    // Sanitize name fields
-    $nom = htmlspecialchars($nom);
-    $prenom = htmlspecialchars($prenom);
-
-    // Check if email already exists
-    if (self::findByEmail($email)) {
-        throw new Exception("Email is already registered");
-    }
-
-    // Create a new user object
-    $user = new User(null, $nom, $prenom, $email);
-    $user->setPasswordHash($password); // Hash the password
-    return $user->save();
-}
-
-
-    // Method to login (signin)
-    public static function signin($email, $password) {
-        $user = self::findByEmail($email);
-
-        // Check if user exists and password is correct
-        if (!$user || !password_verify($password, $user->passwordHash)) {
-            throw new Exception("Invalid email or password");
-        }
-
-        return $user; // Successful login
-    }
-
-    // Method to change the user's password
-    public function changePassword($newPassword) {
-        $this->setPasswordHash($newPassword); // Hash the new password
-        $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("UPDATE users SET password = :password WHERE id = :id");
-        $stmt->bindParam(':password', $this->passwordHash, PDO::PARAM_STR);
-        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
-        $stmt->execute();
+    } catch (Exception $e) {
+        $_SESSION['message'] = [
+            'type' => 'error',
+            'text' => $e->getMessage()
+        ];
+        header('Location: ../pages/login.php');
+        exit();
     }
 }
 
-?>  
+user::logOut();
+$_SESSION['message'] = [
+    'type' => 'success',
+    'text' => 'You have successfully logged out.'
+];
+header('Location: ../index.php');
+exit();
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+<?php
+require_once '../classes/role.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!empty($_SESSION)) {
+    header('Location: ../index.php');
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation bar -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-purple-600">YouDemy</span>
+                </div>
+                <ul class="flex gap-9">
+                    <a href="../index.php"><li>Home</li></a>
+                    <a href="../pages/cours.php"><li>Cours</li></a>
+                </ul>
+                <div class="flex items-center space-x-4">
+                <a href="../pages/login.php"><button class=" text-purple-700 px-4 py-2 rounded-md">Login</button></a>
+                <a href="../pages/sign_up.php"><button class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">sign up</button></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="max-w-md w-full space-y-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold">Create Account</h2>
+                <p class="mt-2 text-gray-600">Join us</p>
+            </div>
+            
+            <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow" method="POST" action="../Handling/AuthHandl.php">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">First Name</label>
+                        <input name="prenom" type="text" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input name="nom" type="text" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input name="email" type="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Role</label>
+                    <select name="Roleselect" type="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                    <?php
+                        $rows = role::getallroles();
+                        foreach($rows as $row){ 
+                            echo "<option value='" . $row['role_id'] . "'>" . $row['name'] . "</option>";
+                        } ?>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input name="password" type="password" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                </div>
+
+                <button name="Createacc"  type="submit" class="w-full bg-primary py-2 px-4 border border-transparent rounded-md text-sm font-medium btn-hover focus:outline-none bg-purple-600 hover:bg-purple-700">
+                    Create Account
+                </button>
+
+                <div class="text-center text-sm text-gray-600">
+                    Already have an account? 
+                    <a href="../pages/login.php" class="font-medium text-purpel-600 hover:text-purpel-500">Log in</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
