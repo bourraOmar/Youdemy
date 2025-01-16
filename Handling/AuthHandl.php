@@ -1,8 +1,9 @@
 <?php
 session_start();
+
 require_once '../classes/user.php';
 
-if(isset($_POST['signup'])){
+if(isset($_POST['Createacc'])){
 try{
     if($_POST['Roleselect'] == 3){
         User::signup($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['Roleselect'], $_POST['password'], 'Active');
@@ -24,12 +25,14 @@ try{
 } catch (Exception $e) {
         $_SESSION['message'] = [
             'type' => 'error',
-            'text' => 'An unexpected error occurred. Please try again.'
+            'text' => $e->getMessage()
         ];
-        echo 'cha3ban3: ' . $e->getMessage();
+        header('Location: ../pages/sign_up.php');
+        exit();
     }
 }
-if (isset($_POST['login'])) {
+
+if (isset($_POST['signinsubmit'])) {
     try {
         $user = User::signin($_POST['email'], $_POST['password']);
         
@@ -38,28 +41,38 @@ if (isset($_POST['login'])) {
                 'type' => 'info',
                 'text' => 'Your account is pending approval. Please contact support.'
             ];
+            header('Location: ../pages/status_pending.php');
+            exit;
         } elseif ($user->getStatus() === 'active') {
             if($user->getrole() == 1){
                 $_SESSION['message'] = [
                     'type' => 'success',
                     'text' => 'Welcome Admin!'
                 ];
+                header('Location: ../pages/adminDashboard.php');
+                exit();
             }
             if($user->getrole() == 2){
                 $_SESSION['message'] = [
                     'type' => 'success',
                     'text' => 'Welcome Instructor!'
                 ];
+                header('Location: ../pages/prof_dashboard.php');
+                exit();
             }
             $_SESSION['message'] = [
                 'type' => 'success',
                 'text' => 'Welcome back!'
             ];
+            header('Location: ../index.php');
+            exit;
         } else {
             $_SESSION['message'] = [
                 'type' => 'error',
                 'text' => 'Your account is not active. Please contact support.'
             ];
+            header('Location: ../pages/status_banned.php');
+            exit();
         }
 
     } catch (Exception $e) {
@@ -67,6 +80,8 @@ if (isset($_POST['login'])) {
             'type' => 'error',
             'text' => $e->getMessage()
         ];
+        header('Location: ../pages/login.php');
+        exit();
     }
 }
 
@@ -75,6 +90,8 @@ $_SESSION['message'] = [
     'type' => 'success',
     'text' => 'You have successfully logged out.'
 ];
+header('Location: ../index.php');
+exit();
 
 
 ?>
