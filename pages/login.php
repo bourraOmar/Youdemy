@@ -1,24 +1,16 @@
 <?php
-
-require_once '../classes/role.php';
-
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
-
 if (!empty($_SESSION)) {
   header('Location: ../index.php');
   exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up | Education</title>
+  <title>Login | Education</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
@@ -43,13 +35,12 @@ if (!empty($_SESSION)) {
           <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
         </div>
         <nav class="hidden md:flex space-x-8 items-center">
-          <a href="index.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
+          <a href="index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
           <a href="courses.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
-          <a href="about.html" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
-          <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Blog</a>
+          <a href="about.html" class="text-gray-700 hover:text-blue-500 transition  duration-300">About</a>
           <a href="contact.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
-          <a href="../authentification/sign up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-          <a href="../authentification/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+          <a href="../pages/sign up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
+          <a href="../pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
         </nav>
         <div class="md:hidden">
           <button class="mobile-menu-button">
@@ -67,51 +58,35 @@ if (!empty($_SESSION)) {
     <!-- Hero Section -->
     <section class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-24">
       <div class="container mx-auto px-6 text-center">
-        <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Create Your Account</h1>
-        <p class="text-xl mb-8 animate__animated animate__fadeInUp">Join our community and start learning today.</p>
+        <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Welcome Back</h1>
+        <p class="text-xl mb-8 animate__animated animate__fadeInUp">Login to access your courses and continue learning.</p>
       </div>
     </section>
 
-    <!-- Sign Up Form Section -->
+    <!-- Login Form Section -->
     <section class="container mx-auto px-6 py-16">
-      <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
-        <h2 class="text-3xl font-bold mb-8 text-center">Sign Up</h2>
-        <form class="space-y-6" mthode="post">
+      <div class="max-w-md mx-auto">
+        <h2 class="text-3xl font-bold mb-8 text-center">Login</h2>
+        <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow" method="post" action="../Handling/AuthHandl.php">
           <div>
-            <label for="name" class="block text-gray-700 mb-2">Full Name</label>
-            <input type="text" name="name" placeholder="Enter your full name" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
           </div>
+
           <div>
-            <label for="email" class="block text-gray-700 mb-2">Email</label>
-            <input type="email" name="email" placeholder="Enter your email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+            <label class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" name="password" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Role</label>
-            <select name="Roleselect" type="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
-              <?php
-              $rows = role::getallroles();
-              foreach ($rows as $row) {
-                echo "<option value='" . $row['role_id'] . "'>" . $row['title'] . "</option>";
-              } ?>
-            </select>
+
+          <button type="submit" name="signinsubmit" class="w-full bg-primary py-2 px-4 border border-transparent rounded-md text-sm font-medium btn-hover focus:outline-none text-white bg-blue-600 hover:bg-blue-700">
+            Log In
+          </button>
+
+          <div class="text-center text-sm text-gray-600">
+            Not registered yet?
+            <a href="../pages/sign_up.php" class="font-medium text-purpel-600 hover:text-purpel-500">Create an account</a>
           </div>
-          <div>
-            <label for="password" class="block text-gray-700 mb-2">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
-          </div>
-          <div>
-            <label for="confirm-password" class="block text-gray-700 mb-2">Confirm Password</label>
-            <input type="password" id="confirm-password" placeholder="Confirm your password" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
-          </div>
-          <div class="flex items-center">
-            <input type="checkbox" id="terms" class="mr-2">
-            <label for="terms" class="text-gray-700">I agree to the <a href="#" class="text-blue-500 hover:text-blue-600">terms and conditions</a></label>
-          </div>
-          <button type="submit" class="w-full bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300">Sign Up</button>
         </form>
-        <div class="mt-6 text-center">
-          <p class="text-gray-600">Already have an account? <a href="login.html" class="text-blue-500 hover:text-blue-600">Log in</a></p>
-        </div>
       </div>
     </section>
   </main>
@@ -166,6 +141,29 @@ if (!empty($_SESSION)) {
     </div>
   </footer>
 
+  <?php
+
+  if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    $type = $message['type'];
+    $text = $message['text'];
+
+    echo "
+        <script>
+            Swal.fire({
+                icon: '$type',
+                title: '$type',
+                text: '$text',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    ";
+
+    unset($_SESSION['message']);
+  }
+  ?>
+
+
   <!-- Scroll Up Button -->
   <div id="back-top" class="fixed bottom-4 right-4">
     <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
@@ -189,25 +187,3 @@ if (!empty($_SESSION)) {
 </body>
 
 </html>
-
-<?php
-
-if (isset($_SESSION['message'])) {
-  $message = $_SESSION['message'];
-  $type = $message['type'];
-  $text = $message['text'];
-
-  echo "
-        <script>
-            Swal.fire({
-                icon: '$type',
-                title: '$type',
-                text: '$text',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    ";
-
-  unset($_SESSION['message']);
-}
-?>

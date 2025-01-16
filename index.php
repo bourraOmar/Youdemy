@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 </head>
+
 <body class="bg-gray-100">
     <!-- Preloader -->
     <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
@@ -24,17 +26,44 @@
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="../Youdemy/index.php"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="courses.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
+                    <a href="../index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
+                    <a href="../pages/cours.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
                     <a href="about.html" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
-                    <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Blog</a>
                     <a href="contact.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
-                    <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-                    <a href="../Youdemy/authentification/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+
+                    <?php if (!isset($_SESSION['user_role'])): ?>
+                        <a href="../pages/sign_up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
+                        <a href="../pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                    <?php else: ?>
+                        <div>
+                            <a href="../youdemy/profils/client.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../youdemy/imgs/profile-major.svg" alt="Profile"></a>
+                        </div>
+                    <?php endif; ?>
+
                 </nav>
+                <?php
+                if (isset($_SESSION['message'])) {
+                    $message = $_SESSION['message'];
+                    $type = $message['type'];
+                    $text = $message['text'];
+
+                    echo "
+                        <script>
+                            Swal.fire({
+                                icon: '$type',
+                                title: '$type',
+                                text: '$text',
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: '#7C3AED'
+                            });
+                        </script>
+                    ";
+                    unset($_SESSION['message']);
+                }
+                ?>
                 <div class="md:hidden">
                     <button class="mobile-menu-button">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,4 +233,5 @@
         });
     </script>
 </body>
+
 </html>
