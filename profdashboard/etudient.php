@@ -1,18 +1,43 @@
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
+    // Check if user is suspended
+    if ($_SESSION['user_status'] === 'suspended') {
+        header("Location: ../Youdemy/pages/status_banned.php");
+        exit();
+    }
+
+    if ($_SESSION['user_role'] == 1) {
+        header('Location: ../Youdemy/pages/adminDashboard.php');
+        exit();
+    } else if ($_SESSION['user_role'] == 2) {
+        header('Location: ../Youdemy/pages/prof_dashboard.php');
+        exit();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page de Profil</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100">
 
     <!-- Navbar -->
     <nav class="bg-white shadow">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-xl font-semibold text-gray-800">Mon Profil</div>
-            <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Déconnexion</button>
+            <a href="../Handling/AuthHandl.php">
+                <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Déconnexion</button></a>
         </div>
     </nav>
 
@@ -20,10 +45,10 @@
     <div class="container mx-auto px-6 py-8">
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex items-center space-x-6">
-                <img class="h-24 w-24 rounded-full" src="https://via.placeholder.com/150" alt="Profile Picture">
+            <img class="h-24 w-24 bg-white rounded-full shadow-soft" src="../imgs/profile-major.svg" alt="Profile">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800">John Doe</h1>
-                    <p class="text-gray-600">john.doe@example.com</p>
+                    <h1 class="text-2xl font-bold text-gray-800"><?php echo $_SESSION['user_nom'] . " " . $_SESSION['user_prenom'] ?></h1>
+                    <p class="text-gray-600"><?php echo $_SESSION['user_email']?></p>
                 </div>
             </div>
         </div>
@@ -42,11 +67,11 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nom</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">John Doe</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $_SESSION['user_nom'] . " " . $_SESSION['user_prenom'] ?></td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Email</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">john.doe@example.com</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo $_SESSION['user_email']?></td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Téléphone</td>
@@ -63,4 +88,5 @@
     </div>
 
 </body>
+
 </html>

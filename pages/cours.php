@@ -1,14 +1,24 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') {
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses | Education</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Courses | Education</title>
 </head>
+
 <body class="bg-gray-100">
+
     <!-- Preloader -->
     <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
         <div class="preloader-inner relative">
@@ -18,22 +28,28 @@
             </div>
         </div>
     </div>
-
     <!-- Header -->
     <header class="bg-white shadow-lg sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="../Youdemy/index.php"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="courses.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
-                    <a href="about.html" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
-                    <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Blog</a>
-                    <a href="contact.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
-                    <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-                    <a href="login.html" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                    <a href="../index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
+                    <a href="../pages/cours.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
+                    <a href="../pages/about.php" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
+                    <a href="../pages/contact.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
+
+                    <?php if (!isset($_SESSION['user_role'])): ?>
+                        <a href="../pages/sign_up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
+                        <a href="../pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                    <?php else: ?>
+                        <div>
+                            <a href="../profdashboard/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../imgs/profile-major.svg" alt="Profile"></a>
+                        </div>
+                    <?php endif; ?>
+
                 </nav>
                 <div class="md:hidden">
                     <button class="mobile-menu-button">
@@ -45,6 +61,7 @@
             </div>
         </div>
     </header>
+
 
     <!-- Main Content -->
     <main>
@@ -195,6 +212,7 @@
         </a>
     </div>
 
+
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script>
@@ -208,5 +226,7 @@
             document.querySelector('nav').classList.toggle('hidden');
         });
     </script>
+
 </body>
+
 </html>

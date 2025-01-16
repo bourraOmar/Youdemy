@@ -1,4 +1,6 @@
 <?php
+require_once '../classes/role.php';
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -14,30 +16,13 @@ if (!empty($_SESSION)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Education</title>
+    <title>Sign Up | Education</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-    </style>
 </head>
 
-<body class="bg-gradient-to-r from-purple-50 to-indigo-50">
+<body class="bg-gray-100">
     <!-- Preloader -->
     <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
         <div class="preloader-inner relative">
@@ -47,6 +32,7 @@ if (!empty($_SESSION)) {
             </div>
         </div>
     </div>
+
     <!-- Header -->
     <header class="bg-white shadow-lg sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4">
@@ -55,9 +41,9 @@ if (!empty($_SESSION)) {
                     <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="courses.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
-                    <a href="about.html" class="text-gray-700 hover:text-blue-500 transition  duration-300">About</a>
+                    <a href="../index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
+                    <a href="../pages/cours.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
                     <a href="contact.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
                     <a href="../pages/sign_up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
                     <a href="../pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
@@ -73,43 +59,62 @@ if (!empty($_SESSION)) {
         </div>
     </header>
 
-
     <!-- Main Content -->
-    <main>
+    <section class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-24">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Create Your Account</h1>
+            <p class="text-xl mb-8 animate__animated animate__fadeInUp">Join our community and start learning today.</p>
+        </div>
+    </section>
+
+    <main class="min-h-screen flex items-center justify-center py-12 px-4">
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-24">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Welcome Back</h1>
-                <p class="text-xl mb-8 animate__animated animate__fadeInUp">Login to access your courses and continue learning.</p>
-            </div>
-        </section>
 
-        <!-- Login Form Section -->
-        <section class="container mx-auto px-6 py-16">
-            <div class="max-w-md mx-auto">
-                <h2 class="text-3xl font-bold mb-8 text-center">Login</h2>
-                <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow" method="post" action="../Handling/AuthHandl.php">
+        <div class="max-w-md w-full space-y-8">
+            <h2 class="text-3xl font-bold mb-8 text-center">Sign Up</h2>
+            <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow" method="POST" action="../Handling/AuthHandl.php">
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" name="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                        <label class="block text-sm font-medium text-gray-700">First Name</label>
+                        <input name="prenom" type="text" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
                     </div>
-
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" name="password" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                        <label class="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input name="nom" type="text" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
                     </div>
+                </div>
 
-                    <button type="submit" name="signinsubmit" class="w-full bg-primary py-2 px-4 border border-transparent rounded-md text-sm font-medium btn-hover focus:outline-none text-white bg-blue-600 hover:bg-blue-700">
-                        Log In
-                    </button>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input name="email" type="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                </div>
 
-                    <div class="text-center text-sm text-gray-600">
-                        Not registered yet?
-                        <a href="../pages/sign_up.php" class="font-medium text-purpel-600 hover:text-purpel-500">Create an account</a>
-                    </div>
-                </form>
-            </div>
-        </section>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Role</label>
+                    <select name="Roleselect" type="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                        <?php
+                        $rows = role::getallroles();
+                        foreach ($rows as $row) {
+                            echo "<option value='" . $row['role_id'] . "'>" . $row['name'] . "</option>";
+                        } ?>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input name="password" type="password" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                </div>
+
+                <button name="Createacc" type="submit" class="w-full bg-primary py-2 px-4 border border-transparent rounded-md text-sm font-medium btn-hover focus:outline-none text-white bg-blue-600 hover:bg-blue-700">
+                    Create Account
+                </button>
+
+                <div class="text-center text-sm text-gray-600">
+                    Already have an account?
+                    <a href="../pages/login.php" class="font-medium text-purpel-600 hover:text-purpel-500">Log in</a>
+                </div>
+            </form>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -161,36 +166,6 @@ if (!empty($_SESSION)) {
             </div>
         </div>
     </footer>
-
-    <?php
-
-    if (isset($_SESSION['message'])) {
-        $message = $_SESSION['message'];
-        $type = $message['type'];
-        $text = $message['text'];
-
-        echo "
-        <script>
-            Swal.fire({
-                icon: '$type',
-                title: '$type',
-                text: '$text',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    ";
-
-        unset($_SESSION['message']);
-    }
-    ?>
-
-
-    <!-- Scroll Up Button -->
-    <div id="back-top" class="fixed bottom-4 right-4">
-        <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
-            <i class="fas fa-level-up-alt"></i>
-        </a>
-    </div>
 
     <!-- Scroll Up Button -->
     <div id="back-top" class="fixed bottom-4 right-4">

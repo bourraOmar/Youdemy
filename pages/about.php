@@ -1,3 +1,11 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') {
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,15 +32,23 @@
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="../Youdemy/index.php"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="../pages/about.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
+                    <a href="../index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
+                    <a href="../pages/cours.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
                     <a href="../pages/about.php" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
                     <a href="../pages/contact.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
-                    <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-                    <a href="../authentification/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+
+                    <?php if (!isset($_SESSION['user_role'])): ?>
+                        <a href="../pages/sign_up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
+                        <a href="../pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                    <?php else: ?>
+                        <div>
+                            <a href="../profdashboard/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../imgs/profile-major.svg" alt="Profile"></a>
+                        </div>
+                    <?php endif; ?>
+
                 </nav>
                 <div class="md:hidden">
                     <button class="mobile-menu-button">
