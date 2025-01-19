@@ -36,7 +36,7 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
     <nav class="bg-white shadow">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-xl font-semibold text-gray-800">Mon Profil</div>
-            <a href="../Handling/AuthHandl.php">
+            <a href="../Handling/authentification.php">
                 <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Déconnexion</button></a>
         </div>
     </nav>
