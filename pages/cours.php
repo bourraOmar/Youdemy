@@ -14,10 +14,11 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Courses | Education</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gradient-to-r from-orange-50 to-teal-50">
 
     <!-- Preloader -->
     <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
@@ -29,21 +30,21 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
         </div>
     </div>
     <!-- Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-teal-500 to-orange-500 text-white sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="../Youdemy/index.php"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="../Youdemy/index.php"><img src="../assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="../index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="../pages/cours.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
-                    <a href="../pages/about.php" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
-                    <a href="../pages/contact.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
+                    <a href="../index.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Home</a>
+                    <a href="../pages/cours.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Courses</a>
+                    <a href="../pages/about.php" class="text-gray-700 hover:text-teal-500 transition duration-300">About</a>
+                    <a href="../pages/contact.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Contact</a>
 
                     <?php if (!isset($_SESSION['user_role'])): ?>
-                        <a href="../pages/sign_up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-                        <a href="../pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                        <a href="../pages/sign_up.php" class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300">Join</a>
+                        <a href="../pages/login.php" class="bg-teal-500 border border-teal-500 text-white px-4 py-2 rounded hover:bg-teal-500 hover:text-white transition duration-300">Log in</a>
                     <?php else: ?>
                         <div>
                             <a href="../profdashboard/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../imgs/profile-major.svg" alt="Profile"></a>
@@ -66,7 +67,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-24">
+        <section class="bg-gradient-to-r from-teal-500 to-orange-500 text-white py-24">
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Our Courses</h1>
                 <nav aria-label="breadcrumb" class="animate__animated animate__fadeInUp">
@@ -85,28 +86,84 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                 <h2 class="text-3xl font-bold mb-4 animate__animated animate__fadeInDown">Our Featured Courses</h2>
                 <p class="text-gray-600 animate__animated animate__fadeInUp">Explore our top courses designed to help you achieve your goals.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Course Card -->
-                <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
-                    <img src="assets/img/gallery/featured1.png" alt="Course Image" class="w-full">
-                    <div class="p-6">
-                        <p class="text-gray-600">User Experience</p>
-                        <h3 class="text-xl font-bold mb-2">Fundamental of UX for Application Design</h3>
-                        <p class="text-gray-600 mb-4">The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.</p>
-                        <div class="flex justify-between items-center mb-4">
-                            <div class="flex items-center">
-                                <span class="text-yellow-400">★★★★☆</span>
-                                <span class="text-gray-600 ml-2">(4.5)</span>
-                            </div>
-                            <span class="text-blue-500 font-bold">$135</span>
+            <div id="results" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Course Card 1 -->
+                <?php
+                $cours = VideoCours::showAllCours();
+                foreach ($cours as $cour) {
+                ?>
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                        <!-- Course Thumbnail -->
+                        <div class="relative">
+                            <img src="<?php echo $cour->getcourseImage() ?>" alt="Course thumbnail" class="w-full h-48 object-cover" />
+                            <!-- course type -->
+                            <?php if ($cour->cours_type == 'video') { ?>
+                                <span class="absolute top-4 left-4 bg-white/90 px-2 py-1 rounded text-xs font-medium text-white bg-purple-600 rounded-full">
+                                    Video
+                                </span>
+                            <?php } else if ($cour->cours_type == 'document') { ?>
+                                <span class="absolute top-4 left-4 bg-white/90 px-2 py-1 rounded text-xs font-medium text-white bg-green-600 rounded-full">
+                                    document
+                                </span>
+                            <?php } ?>
                         </div>
-                        <a href="#" class="border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Find out more</a>
+
+                        <div class="p-6">
+                            <!-- Course Title -->
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold hover:text-purple-600 transition-colors">
+                                    <?php echo strlen($cour->gettitle()) > 40 ? substr($cour->gettitle(), 0, 40) . '...' : $cour->gettitle(); ?>
+                                </h3>
+                            </div>
+
+                            <!-- Course Description -->
+                            <p class="text-gray-600 text-sm mb-4">
+                                <?php echo strlen($cour->getdescription()) > 100 ? substr($cour->getdescription(), 0, 50) . '...' : $cour->getdescription(); ?>
+                            </p>
+
+                            <!-- Instructor & Date -->
+                            <div class="flex items-center mb-3">
+                                <span class="text-sm text-gray-600">By <?php echo $cour->personName ?></span>
+                                <span class="mx-2">•</span>
+                                <span class="text-sm text-gray-600">Updated <?php echo (new DateTime($cour->creationdate))->format('F j, Y') ?></span>
+                            </div>
+
+                            <!-- Course Stats -->
+                            <?php
+                            $counts = Cours::CountenrollCourses($cour->getId());
+                            ?>
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                    </svg>
+                                    <?php echo $counts['enroll_Count'] ?>
+                                </div>
+                                <span class="mx-2">•</span>
+                                <div>
+                                    <?php
+                                    $tags = Tag::gettagsforCours($cour->getId());
+                                    foreach ($tags as $tag) {
+                                    ?>
+                                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"><?php echo strlen($tag->getname()) > 10 ? substr($tag->getname(), 0, 10) . '...' : $tag->getname(); ?></span>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <!-- Price and Enroll Button -->
+                            <div class="flex items-center justify-between mt-4">
+                                <span class="text-lg font-bold text-purple-600"><?php echo $cour->getprice() ?>$</span>
+                                <a href="../Handling/enrollHandle.php?course_id=<?php echo $cour->getId() ?>"><button class="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
+                                        Enroll Now
+                                    </button></a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <!-- Repeat for other courses -->
+                <?php } ?>
             </div>
             <div class="text-center mt-16">
-                <a href="#" class="border border-blue-500 text-blue-500 px-6 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Load More</a>
+                <a href="#" class="border border-teal-500 text-teal-500 px-6 py-2 rounded hover:bg-teal-500 hover:text-white transition duration-300">Load More</a>
             </div>
         </div>
 
@@ -128,7 +185,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                     <!-- Repeat for other subjects -->
                 </div>
                 <div class="text-center mt-16">
-                    <a href="#" class="border border-blue-500 text-blue-500 px-6 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">View More Subjects</a>
+                    <a href="#" class="border border-teal-500 text-teal-500 px-6 py-2 rounded hover:bg-teal-500 hover:text-white transition duration-300">View More Subjects</a>
                 </div>
             </div>
         </div>
@@ -160,7 +217,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <img src="assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
+                    <img src="../assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
                     <p class="text-gray-400">The automated process starts as soon as your clothes go into the machine.</p>
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
@@ -200,14 +257,14 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-blue-500 hover:text-blue-400">Colorlib</a></p>
+                <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-teal-500 hover:text-teal-400">Colorlib</a></p>
             </div>
         </div>
     </footer>
 
     <!-- Scroll Up Button -->
     <div id="back-top" class="fixed bottom-4 right-4">
-        <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+        <a href="#" class="bg-teal-500 text-white p-3 rounded-full shadow-lg hover:bg-teal-600 transition duration-300">
             <i class="fas fa-level-up-alt"></i>
         </a>
     </div>

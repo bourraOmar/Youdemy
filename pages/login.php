@@ -37,7 +37,7 @@ if (!empty($_SESSION)) {
     </style>
 </head>
 
-<body class="bg-gradient-to-r from-purple-50 to-indigo-50">
+<body class="bg-gradient-to-r from-orange-50 to-teal-50">
     <!-- Preloader -->
     <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
         <div class="preloader-inner relative">
@@ -55,12 +55,12 @@ if (!empty($_SESSION)) {
                     <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="courses.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
-                    <a href="about.html" class="text-gray-700 hover:text-blue-500 transition  duration-300">About</a>
-                    <a href="contact.html" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
-                    <a href="../pages/sign_up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-                    <a href="../pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                    <a href="index.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Home</a>
+                    <a href="courses.html" class="text-gray-700 hover:text-teal-500 transition duration-300">Courses</a>
+                    <a href="about.html" class="text-gray-700 hover:text-teal-500 transition  duration-300">About</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-teal-500 transition duration-300">Contact</a>
+                    <a href="../pages/sign_up.php" class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300">Join</a>
+                    <a href="../pages/login.php" class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300">Log in</a>
                 </nav>
                 <div class="md:hidden">
                     <button class="mobile-menu-button">
@@ -77,7 +77,7 @@ if (!empty($_SESSION)) {
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-24">
+        <section class="bg-gradient-to-r from-teal-500 to-orange-500 text-white py-24">
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Welcome Back</h1>
                 <p class="text-xl mb-8 animate__animated animate__fadeInUp">Login to access your courses and continue learning.</p>
@@ -88,24 +88,24 @@ if (!empty($_SESSION)) {
         <section class="container mx-auto px-6 py-16">
             <div class="max-w-md mx-auto">
                 <h2 class="text-3xl font-bold mb-8 text-center">Login</h2>
-                <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow" method="post" action="../Handling/AuthHandl.php">
+                <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow" method="post" action="../Handling/authentification.php">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" name="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                        <input type="email" name="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" name="password" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                        <input type="password" name="password" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
 
-                    <button type="submit" name="signinsubmit" class="w-full bg-primary py-2 px-4 border border-transparent rounded-md text-sm font-medium btn-hover focus:outline-none text-white bg-blue-600 hover:bg-blue-700">
+                    <button type="submit" name="signinsubmit" class="w-full bg-primary py-2 px-4 border border-transparent rounded-md text-sm font-medium btn-hover focus:outline-none text-white bg-teal-600 hover:bg-teal-700">
                         Log In
                     </button>
 
                     <div class="text-center text-sm text-gray-600">
                         Not registered yet?
-                        <a href="../pages/sign_up.php" class="font-medium text-purpel-600 hover:text-purpel-500">Create an account</a>
+                        <a href="../pages/sign_up.php" class="font-medium text-orange-600 hover:text-orange-500">Create an account</a>
                     </div>
                 </form>
             </div>
@@ -157,7 +157,7 @@ if (!empty($_SESSION)) {
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-blue-500 hover:text-blue-400">Colorlib</a></p>
+                <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-teal-500 hover:text-teal-400">Colorlib</a></p>
             </div>
         </div>
     </footer>
@@ -187,14 +187,14 @@ if (!empty($_SESSION)) {
 
     <!-- Scroll Up Button -->
     <div id="back-top" class="fixed bottom-4 right-4">
-        <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+        <a href="#" class="bg-teal-500 text-white p-3 rounded-full shadow-lg hover:bg-teal-600 transition duration-300">
             <i class="fas fa-level-up-alt"></i>
         </a>
     </div>
 
     <!-- Scroll Up Button -->
     <div id="back-top" class="fixed bottom-4 right-4">
-        <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+        <a href="#" class="bg-teal-500 text-white p-3 rounded-full shadow-lg hover:bg-teal-600 transition duration-300">
             <i class="fas fa-level-up-alt"></i>
         </a>
     </div>

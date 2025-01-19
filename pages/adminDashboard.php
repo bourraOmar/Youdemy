@@ -22,7 +22,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
     <title>YouDemy | Admin Dashboard</title>
     <style>
         .bg-primary {
-            background-color:rgb(57, 75, 237);
+            background-color: rgb(57, 75, 237);
         }
 
         .modal.active {
@@ -63,7 +63,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
                     <span class="text-gray-600">Admin Panel</span>
-                    <a href="../Handling/AuthHandl.php">
+                    <a href="../Handling/authentification.php">
                         <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Déconnexion</button></a>
 
                 </nav>
@@ -106,42 +106,58 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
 
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-gray-500 text-sm mb-1">Total Users</h3>
-                <p class="text-3xl font-bold">15,234</p>
+            <!-- Card 1: Total Users -->
+            <div class="bg-gradient-to-r from-teal-50 to-orange-50 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInLeft">
+                <h3 class="text-gray-600 text-sm mb-1">Total Users</h3>
+                <p class="text-3xl font-bold text-teal-600">15,234</p>
+                <div class="mt-4">
+                    <span class="text-sm text-gray-500">+5% from last month</span>
+                </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-gray-500 text-sm mb-1">Total Courses</h3>
-                <p class="text-3xl font-bold">456</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-gray-500 text-sm mb-1">Total Revenue</h3>
-                <p class="text-3xl font-bold">$123,456</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-gray-500 text-sm mb-1">Active Instructors</h3>
-                <p class="text-3xl font-bold">89</p>
-            </div>
-        </div>
 
-        <div class="mb-6 flex space-x-4">
-            <button onclick="openModal('addCategoryModal')" class="bg-primary px-4 py-2 rounded-lg hover:bg-blue-500 flex items-center text-white">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                Add Category
-            </button>
+            <!-- Card 2: Total Courses -->
+            <div class="bg-gradient-to-r from-teal-50 to-orange-50 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
+                <h3 class="text-gray-600 text-sm mb-1">Total Courses</h3>
+                <p class="text-3xl font-bold text-orange-600">456</p>
+                <div class="mt-4">
+                    <span class="text-sm text-gray-500">+12 new courses this month</span>
+                </div>
+            </div>
+
+            <!-- Card 3: Total Revenue -->
+            <div class="bg-gradient-to-r from-teal-50 to-orange-50 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInDown">
+                <h3 class="text-gray-600 text-sm mb-1">Total Revenue</h3>
+                <p class="text-3xl font-bold text-teal-600">$123,456</p>
+                <div class="mt-4">
+                    <span class="text-sm text-gray-500">+8% from last quarter</span>
+                </div>
+            </div>
+
+            <!-- Card 4: Active Instructors -->
+            <div class="bg-gradient-to-r from-teal-50 to-orange-50 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInRight">
+                <h3 class="text-gray-600 text-sm mb-1">Active Instructors</h3>
+                <p class="text-3xl font-bold text-orange-600">89</p>
+                <div class="mt-4">
+                    <span class="text-sm text-gray-500">+3 new instructors joined</span>
+                </div>
+            </div>
         </div>
 
         <!-- Category Table -->
         <div class="bg-white rounded-lg shadow-md mt-6 mb-6">
-            <div class="p-6 border-b border-gray-200">
+            <div class="flex justify-between p-6 border-b border-gray-200">
                 <h2 class="text-xl font-semibold text-gray-800">Categories Management</h2>
+                <button onclick="openModal('addCategoryModal')" class="bg-primary px-4 py-2 rounded-lg hover:bg-blue-500 flex items-center text-white">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Add Category
+                </button>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full">
-                    <thead class="bg-gray-50">
+                    <thead class="bg-white">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
@@ -185,30 +201,31 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
                         </tr>
                     </thead>
                     <?php
+
                     $users = Admin::getallusers();
                     foreach ($users as $user) {
                     ?>
                         <tbody>
                             <tr class="border-b">
-                                <td class="py-4"><?php echo $user['prenom'] . " " . $user['nom'] ?></td>
-                                <td><?php echo $user['name'] ?></td>
-                                <?php if ($user['status'] === 'waiting') { ?>
-                                    <td><span class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-sm"><?php echo $user['status'] ?></span></td>
-                                <?php } else if ($user['status'] === 'active') { ?>
-                                    <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm"><?php echo $user['status'] ?></span></td>
-                                <?php } else if ($user['status'] === 'suspended') { ?>
-                                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm"><?php echo $user['status'] ?></span></td>
+                                <td class="py-4"><?php echo $user->getPrenom() . " " . $user->getNom() ?></td>
+                                <td><?php echo $user->getrole() ?></td>
+                                <?php if ($user->getStatus() === 'waiting') { ?>
+                                    <td><span class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-sm"><?php echo $user->getStatus() ?></span></td>
+                                <?php } else if ($user->getStatus() === 'active') { ?>
+                                    <td><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm"><?php echo $user->getStatus() ?></span></td>
+                                <?php } else if ($user->getStatus() === 'suspended') { ?>
+                                    <td><span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm"><?php echo $user->getStatus() ?></span></td>
                                 <?php } ?>
                                 <td>
                                     <div class="flex gap-3">
                                         <form action="../Handling/userHandl.php" method="post">
                                             <input type="hidden" name="action" value="active">
-                                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                                            <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>">
                                             <button type="submit" class="text-green-600 hover:text-green-800">Approve</button>
                                         </form>
                                         <form action="../Handling/userHandl.php" method="post">
                                             <input type="hidden" name="action" value="suspended">
-                                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                                            <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>">
                                             <button type="submit" class="text-red-600 hover:text-red-800">Ban</button>
                                         </form>
                                     </div>
@@ -217,33 +234,6 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
                         </tbody>
                     <?php } ?>
                 </table>
-            </div>
-        </div>
-
-        <!-- Recent Reports -->
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-            <h2 class="text-xl font-bold mb-4">Recent Reports</h2>
-            <div class="space-y-4">
-                <div class="flex items-center justify-between border-b pb-4">
-                    <div>
-                        <p class="font-semibold">Content Report</p>
-                        <p class="text-gray-500">Report on "JavaScript Basics" course</p>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <button class="bg-red-100 text-red-600 px-3 py-1 rounded-md">Review</button>
-                        <span class="text-gray-400">2 hours ago</span>
-                    </div>
-                </div>
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="font-semibold">Payment Issue</p>
-                        <p class="text-gray-500">Failed payment for course enrollment</p>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <button class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-md">Pending</button>
-                        <span class="text-gray-400">5 hours ago</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

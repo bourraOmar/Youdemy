@@ -14,9 +14,10 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
     <title>Contact Us | Education</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 </head>
-<body class="bg-gray-100">
+<body class="bg-gradient-to-r from-orange-50 to-teal-50">
     <!-- Preloader -->
     <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
         <div class="preloader-inner relative">
@@ -28,21 +29,21 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
     </div>
 
     <!-- Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-teal-500 to-orange-500 text-white sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="../Youdemy/index.php"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="../Youdemy/index.php"><img src="../assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="../index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="../pages/cours.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
-                    <a href="../pages/about.php" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
-                    <a href="../pages/contact.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
+                    <a href="../index.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Home</a>
+                    <a href="../pages/cours.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Courses</a>
+                    <a href="../pages/about.php" class="text-gray-700 hover:text-teal-500 transition duration-300">About</a>
+                    <a href="../pages/contact.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Contact</a>
 
                     <?php if (!isset($_SESSION['user_role'])): ?>
-                        <a href="../pages/sign_up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-                        <a href="../pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                        <a href="../pages/sign_up.php" class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300">Join</a>
+                        <a href="../pages/login.php" class="bg-teal-500 border border-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 hover:text-white transition duration-300">Log in</a>
                     <?php else: ?>
                         <div>
                             <a href="../profdashboard/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../imgs/profile-major.svg" alt="Profile"></a>
@@ -64,7 +65,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-24">
+        <section class="bg-gradient-to-r from-teal-500 to-orange-500 text-white py-24">
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Contact Us</h1>
                 <nav aria-label="breadcrumb" class="animate__animated animate__fadeInUp">
@@ -89,20 +90,20 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                     <form class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <input type="text" placeholder="Enter your name" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                                <input type="text" placeholder="Enter your name" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                             </div>
                             <div>
-                                <input type="email" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                                <input type="email" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                             </div>
                         </div>
                         <div>
-                            <input type="text" placeholder="Enter Subject" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                            <input type="text" placeholder="Enter Subject" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                         </div>
                         <div>
-                            <textarea placeholder="Enter Message" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" rows="6"></textarea>
+                            <textarea placeholder="Enter Message" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" rows="6"></textarea>
                         </div>
                         <div>
-                            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300">Send</button>
+                            <button type="submit" class="bg-teal-500 text-white px-6 py-2 rounded hover:bg-teal-600 transition duration-300">Send</button>
                         </div>
                     </form>
                 </div>
@@ -110,21 +111,21 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                 <!-- Contact Info -->
                 <div class="space-y-6 animate__animated animate__fadeInRight">
                     <div class="flex items-start space-x-4 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                        <span class="text-blue-500 text-2xl"><i class="fas fa-map-marker-alt"></i></span>
+                        <span class="text-teal-500 text-2xl"><i class="fas fa-map-marker-alt"></i></span>
                         <div>
                             <h3 class="text-xl font-bold">Buttonwood, California.</h3>
                             <p class="text-gray-600">Rosemead, CA 91770</p>
                         </div>
                     </div>
                     <div class="flex items-start space-x-4 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                        <span class="text-blue-500 text-2xl"><i class="fas fa-phone-alt"></i></span>
+                        <span class="text-teal-500 text-2xl"><i class="fas fa-phone-alt"></i></span>
                         <div>
                             <h3 class="text-xl font-bold">+1 253 565 2365</h3>
                             <p class="text-gray-600">Mon to Fri 9am to 6pm</p>
                         </div>
                     </div>
                     <div class="flex items-start space-x-4 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                        <span class="text-blue-500 text-2xl"><i class="fas fa-envelope"></i></span>
+                        <span class="text-teal-500 text-2xl"><i class="fas fa-envelope"></i></span>
                         <div>
                             <h3 class="text-xl font-bold">support@colorlib.com</h3>
                             <p class="text-gray-600">Send us your query anytime!</p>
@@ -140,7 +141,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <img src="assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
+                    <img src="../assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
                     <p class="text-gray-400">The automated process starts as soon as your clothes go into the machine.</p>
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
@@ -180,14 +181,14 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-blue-500 hover:text-blue-400">Colorlib</a></p>
+                <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-teal-500 hover:text-teal-400">Colorlib</a></p>
             </div>
         </div>
     </footer>
 
     <!-- Scroll Up Button -->
     <div id="back-top" class="fixed bottom-4 right-4">
-        <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+        <a href="#" class="bg-teal-500 text-white p-3 rounded-full shadow-lg hover:bg-teal-600 transition duration-300">
             <i class="fas fa-level-up-alt"></i>
         </a>
     </div>
@@ -204,7 +205,6 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
         document.querySelector('.mobile-menu-button').addEventListener('click', function() {
             document.querySelector('nav').classList.toggle('hidden');
         });
-
     </script>
 </body>
 </html>

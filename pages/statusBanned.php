@@ -85,7 +85,7 @@
             </div>
 
             <div class="mt-8">
-                <a href="../Handling/AuthHandl.php">
+                <a href="../Handling/authentification.php">
                     <button type="button" class="bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200">
                         Return to Homepage
                     </button>
