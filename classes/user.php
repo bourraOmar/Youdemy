@@ -1,7 +1,8 @@
-<?php 
+<?php
 require_once '../classes/conn.php';
 
-class User {
+class User
+{
     protected $id;
     protected $nom;
     protected $prenom;
@@ -10,7 +11,8 @@ class User {
     protected $status;
     protected $hashedPassword;
 
-    function __construct($id, $nom, $prenom, $email, $role, $status, $hashedPassword = null){
+    function __construct($id, $nom, $prenom, $email, $role, $status, $hashedPassword = null)
+    {
         $this->id = $id;
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -20,23 +22,43 @@ class User {
         $this->role = $role;
     }
 
-    public function getId() { return $this->id; }
-    public function getNom() { return $this->nom; }
-    public function getPrenom() { return $this->prenom; }
-    public function getEmail() { return $this->email; }
-    public function getStatus() { return $this->status; }
-    public function getrole() { return $this->role; }
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function getNom()
+    {
+        return $this->nom;
+    }
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    public function getrole()
+    {
+        return $this->role;
+    }
 
 
-    private function hashPass($password){
+    private function hashPass($password)
+    {
         return $this->hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     }
 
-    public function insertUser(){
+    public function insertUser()
+    {
         $db = Dbconnection::getInstance()->getConnection();
 
-        try{
-            if($this->id){
+        try {
+            if ($this->id) {
                 $sql = "UPDATE users
                         SET nom = :nom, prenom = :prenom, email = :email, password = :password, status = :status
                         WHERE id = :id";
@@ -53,7 +75,7 @@ class User {
                 $stmt->execute();
             } else {
                 $sql = "INSERT INTO users (nom, prenom, email, password, role_id, status)
-                        VALUES (:nom, :prenom, :email, :password, :role, :status)";           
+                        VALUES (:nom, :prenom, :email, :password, :role, :status)";
                 $stmt = $db->prepare($sql);
 
                 $stmt->bindParam(':nom', $this->nom);
@@ -69,13 +91,13 @@ class User {
             }
 
             return $this->id;
-        }
-        catch(PDOException $e){
+        } catch (PDOException $e) {
             throw new Exception('you have err in insert or update user data' . $e->getMessage());
         }
     }
 
-    static function findbyemail($email){
+    static function findbyemail($email)
+    {
         $db = Dbconnection::getInstance()->getConnection();
 
         $sql = "SELECT * FROM users WHERE email = :email";
@@ -85,14 +107,14 @@ class User {
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if($result){
+        if ($result) {
             return new User(
                 $result['user_id'],
                 $result['nom'],
                 $result['prenom'],
                 $result['email'],
-                $result['role_id'], 
-                $result['status'],  
+                $result['role_id'],
+                $result['status'],
                 $result['password']
             );
         }
@@ -100,12 +122,13 @@ class User {
         return null;
     }
 
-    static function signup($nom, $prenom, $email, $role, $password, $status){
-        if(self::findbyemail($email)){
+    static function signup($nom, $prenom, $email, $role, $password, $status)
+    {
+        if (self::findbyemail($email)) {
             throw new Exception('email is been regestred before!');
         }
 
-        if(strlen($password) < 8){
+        if (strlen($password) < 8) {
             throw new Exception('password must be more than 8 caracters!');
         }
 
@@ -117,7 +140,8 @@ class User {
         $user->insertUser();
     }
 
-    public static function signin($email, $password) {
+    public static function signin($email, $password)
+    {
         $user = self::findByEmail($email);
 
 
@@ -136,13 +160,10 @@ class User {
         return $user;
     }
 
-    public static function logOut(){
+    public static function logOut()
+    {
         session_start();
         session_unset();
         session_destroy();
     }
-
 }
-
-
-?>

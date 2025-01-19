@@ -1,20 +1,23 @@
-<?php 
+<?php
 require_once '../classes/conn.php';
 
-class Category {
+class Category
+{
     private $id;
     private $name;
 
-    function __construct($id, $name){
+    function __construct($id, $name)
+    {
         $this->id = $id;
         $this->name = $name;
     }
 
-    function saveCategorie(){
+    function saveCategorie()
+    {
         $db = Dbconnection::getInstance()->getConnection();
 
-        if($this->id){
-            try{
+        if ($this->id) {
+            try {
                 $sql = "UPDATE categories
                         SET name = :name
                         WHERE category_id = :category_id";
@@ -24,12 +27,11 @@ class Category {
                 $stmt->execute();
 
                 return $this->id;
-            }
-            catch(PDOException $e){
+            } catch (PDOException $e) {
                 throw new Exception('there is an error while create category');
             }
         } else {
-            try{
+            try {
                 $sql = "INSERT INTO categories(name)
                     VALUES (:name)";
                 $stmt = $db->prepare($sql);
@@ -37,15 +39,15 @@ class Category {
                 $stmt->execute();
 
                 $this->id = $db->lastInsertId();
-            }
-            catch(PDOException $e){
+            } catch (PDOException $e) {
                 throw new Exception('there is an error while create category');
             }
             return $this->id;
         }
     }
 
-    static function CreateCategorie($name){
+    static function CreateCategorie($name)
+    {
         $name = htmlspecialchars($name);
 
         $category = new Category(null, $name);
@@ -53,21 +55,20 @@ class Category {
         $category->saveCategorie();
     }
 
-    static function showCategories() {
+    static function showCategories()
+    {
         $db = Dbconnection::getInstance()->getConnection();
-    
+
         try {
             $sql = "SELECT category_id, name FROM categories";
             $stmt = $db->prepare($sql);
             $stmt->execute();
-    
+
             $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
             return $categories;
         } catch (PDOException $e) {
             throw new Exception('Error while retrieving categories');
         }
     }
-} 
-
-?>
+}
