@@ -3,26 +3,26 @@ session_start();
 
 require_once '../classes/user.php';
 
-if(isset($_POST['Createacc'])){
-try{
-    if($_POST['Roleselect'] == 3){
-        User::signup($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['Roleselect'], $_POST['password'], 'Active');
-        $_SESSION['message'] = [
-            'type' => 'success',
-            'text' => 'Account created successfully! You can now login.'
-        ];
-        header('Location: ../pages/login.php');
-        exit();
-    } else {
-        User::signup($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['Roleselect'], $_POST['password'], 'waiting');
-        $_SESSION['message'] = [
-            'type' => 'info',
-            'text' => 'Account created successfully, but is awaiting approval.'
-        ];
-        header('Location: ../index.php');
-        exit();
-    }
-} catch (Exception $e) {
+if (isset($_POST['Createacc'])) {
+    try {
+        if ($_POST['Roleselect'] == 3) {
+            User::signup($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['Roleselect'], $_POST['password'], 'Active');
+            $_SESSION['message'] = [
+                'type' => 'success',
+                'text' => 'Account created successfully! You can now login.'
+            ];
+            header('Location: ../pages/login.php');
+            exit();
+        } else {
+            User::signup($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['Roleselect'], $_POST['password'], 'waiting');
+            $_SESSION['message'] = [
+                'type' => 'info',
+                'text' => 'Account created successfully, but is awaiting approval.'
+            ];
+            header('Location: ../index.php');
+            exit();
+        }
+    } catch (Exception $e) {
         $_SESSION['message'] = [
             'type' => 'error',
             'text' => $e->getMessage()
@@ -35,7 +35,7 @@ try{
 if (isset($_POST['signinsubmit'])) {
     try {
         $user = User::signin($_POST['email'], $_POST['password']);
-        
+
         if ($user->getStatus() === 'waiting') {
             $_SESSION['message'] = [
                 'type' => 'info',
@@ -44,7 +44,7 @@ if (isset($_POST['signinsubmit'])) {
             header('Location: ../pages/status_pending.php');
             exit;
         } elseif ($user->getStatus() === 'active') {
-            if($user->getrole() == 1){
+            if ($user->getrole() == 1) {
                 $_SESSION['message'] = [
                     'type' => 'success',
                     'text' => 'Welcome Admin!'
@@ -52,12 +52,12 @@ if (isset($_POST['signinsubmit'])) {
                 header('Location: ../pages/adminDashboard.php');
                 exit();
             }
-            if($user->getrole() == 2){
+            if ($user->getrole() == 2) {
                 $_SESSION['message'] = [
                     'type' => 'success',
                     'text' => 'Welcome Instructor!'
                 ];
-                header('Location: ../pages/prof_dashboard.php');
+                header('Location: ../profdashboard/dashboardTeacher.php');
                 exit();
             }
             $_SESSION['message'] = [
@@ -71,10 +71,9 @@ if (isset($_POST['signinsubmit'])) {
                 'type' => 'error',
                 'text' => 'Your account is not active. Please contact support.'
             ];
-            header('Location: ../pages/status_banned.php');
+            header('Location: ../pages/statusBanned.php');
             exit();
         }
-
     } catch (Exception $e) {
         $_SESSION['message'] = [
             'type' => 'error',
@@ -92,6 +91,3 @@ $_SESSION['message'] = [
 ];
 header('Location: ../index.php');
 exit();
-
-
-?>
