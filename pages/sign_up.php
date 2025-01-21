@@ -43,7 +43,7 @@ if (!empty($_SESSION)) {
         <div class="preloader-inner relative">
             <div class="preloader-circle animate-spin rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
             <div class="preloader-img absolute inset-0 flex justify-center items-center">
-                <img src="assets/img/logo/loder.png" alt="Loading..." class="h-8">
+                <img src="../assets/img/logo/loder.png" alt="Loading..." class="h-8">
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@ if (!empty($_SESSION)) {
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="index.html"><img src="../assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
                     <a href="../index.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Home</a>
@@ -132,7 +132,7 @@ if (!empty($_SESSION)) {
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <img src="assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
+                    <img src="../assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
                     <p class="text-gray-400">The automated process starts as soon as your clothes go into the machine.</p>
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>

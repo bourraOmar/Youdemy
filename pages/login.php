@@ -18,6 +18,8 @@ if (!empty($_SESSION)) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
         @keyframes fadeIn {
             from {
@@ -43,23 +45,24 @@ if (!empty($_SESSION)) {
         <div class="preloader-inner relative">
             <div class="preloader-circle animate-spin rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
             <div class="preloader-img absolute inset-0 flex justify-center items-center">
-                <img src="assets/img/logo/loder.png" alt="Loading..." class="h-8">
+                <img src="../assets/img/logo/loder.png" alt="Loading..." class="h-8">
             </div>
         </div>
     </div>
+
     <!-- Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-teal-500 to-orange-500 sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="index.html"><img src="../assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Home</a>
-                    <a href="courses.html" class="text-gray-700 hover:text-teal-500 transition duration-300">Courses</a>
-                    <a href="about.html" class="text-gray-700 hover:text-teal-500 transition  duration-300">About</a>
-                    <a href="contact.html" class="text-gray-700 hover:text-teal-500 transition duration-300">Contact</a>
-                    <a href="../pages/sign_up.php" class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300">Join</a>
+                    <a href="index.php" class="text-white hover:text-teal-200 transition duration-300">Home</a>
+                    <a href="courses.html" class="text-white hover:text-teal-200 transition duration-300">Courses</a>
+                    <a href="about.html" class="text-white hover:text-teal-200 transition duration-300">About</a>
+                    <a href="contact.html" class="text-white hover:text-teal-200 transition duration-300">Contact</a>
+                    <a href="../pages/sign_up.php" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition duration-300">Join</a>
                     <a href="../pages/login.php" class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300">Log in</a>
                 </nav>
                 <div class="md:hidden">
@@ -73,7 +76,6 @@ if (!empty($_SESSION)) {
         </div>
     </header>
 
-
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
@@ -86,9 +88,9 @@ if (!empty($_SESSION)) {
 
         <!-- Login Form Section -->
         <section class="container mx-auto px-6 py-16">
-            <div class="max-w-md mx-auto">
-                <h2 class="text-3xl font-bold mb-8 text-center">Login</h2>
-                <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow" method="post" action="../Handling/authentification.php">
+            <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg animate__animated animate__fadeIn">
+                <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Login</h2>
+                <form class="mt-8 space-y-6" method="post" action="../Handling/authentification.php">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Email</label>
                         <input type="email" name="email" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-transparent">
@@ -99,7 +101,7 @@ if (!empty($_SESSION)) {
                         <input type="password" name="password" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                     </div>
 
-                    <button type="submit" name="signinsubmit" class="w-full bg-primary py-2 px-4 border border-transparent rounded-md text-sm font-medium btn-hover focus:outline-none text-white bg-teal-600 hover:bg-teal-700">
+                    <button type="submit" name="signinsubmit" class="w-full bg-teal-600 py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white hover:bg-teal-700 transition duration-300">
                         Log In
                     </button>
 
@@ -117,7 +119,7 @@ if (!empty($_SESSION)) {
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <img src="assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
+                    <img src="../assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
                     <p class="text-gray-400">The automated process starts as soon as your clothes go into the machine.</p>
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
@@ -163,7 +165,6 @@ if (!empty($_SESSION)) {
     </footer>
 
     <?php
-
     if (isset($_SESSION['message'])) {
         $message = $_SESSION['message'];
         $type = $message['type'];
@@ -183,14 +184,6 @@ if (!empty($_SESSION)) {
         unset($_SESSION['message']);
     }
     ?>
-
-
-    <!-- Scroll Up Button -->
-    <div id="back-top" class="fixed bottom-4 right-4">
-        <a href="#" class="bg-teal-500 text-white p-3 rounded-full shadow-lg hover:bg-teal-600 transition duration-300">
-            <i class="fas fa-level-up-alt"></i>
-        </a>
-    </div>
 
     <!-- Scroll Up Button -->
     <div id="back-top" class="fixed bottom-4 right-4">

@@ -19,7 +19,7 @@ if (isset($_POST['Createacc'])) {
                 'type' => 'info',
                 'text' => 'Account created successfully, but is awaiting approval.'
             ];
-            header('Location: ../index.php');
+            header('Location: ../pages/login.php');
             exit();
         }
     } catch (Exception $e) {

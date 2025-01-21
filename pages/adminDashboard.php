@@ -19,7 +19,10 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>YouDemy | Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <title>Admin | Dashboard</title>
     <style>
         .bg-primary {
             background-color: rgb(57, 75, 237);
@@ -41,31 +44,30 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
     </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gradient-to-r from-orange-50 to-teal-50 min-h-screen">
 
     <!-- Preloader -->
     <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
         <div class="preloader-inner relative">
             <div class="preloader-circle animate-spin rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
             <div class="preloader-img absolute inset-0 flex justify-center items-center">
-                <img src="assets/img/logo/loder.png" alt="Loading..." class="h-8">
+                <img src="../assets/img/logo/loder.png" alt="Loading..." class="h-8">
             </div>
         </div>
     </div>
 
-
     <!-- Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-teal-500 to-orange-500 shadow-lg sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="../Youdemy/index.php"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="../Youdemy/index.php"><img src="../assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <span class="text-gray-600">Admin Panel</span>
+                    <span class="text-white">Admin Panel</span>
                     <a href="../Handling/authentification.php">
-                        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Déconnexion</button></a>
-
+                        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">Déconnexion</button>
+                    </a>
                 </nav>
                 <div class="md:hidden">
                     <button class="mobile-menu-button">
@@ -79,7 +81,6 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
     </header>
 
     <?php
-
     if (isset($_SESSION['message'])) {
         $message = $_SESSION['message'];
         $type = $message['type'];
@@ -102,7 +103,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
 
     <!-- Main Content -->
     <div class="p-8 max-w-7xl mx-auto">
-        <h1 class="text-2xl font-bold mb-8">Statistics Overview</h1>
+        <h1 class="text-3xl font-bold mb-8 text-gray-800 animate__animated animate__fadeIn">Statistics Overview</h1>
 
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -144,10 +145,10 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
         </div>
 
         <!-- Category Table -->
-        <div class="bg-white rounded-lg shadow-md mt-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md mt-6 mb-6 animate__animated animate__fadeIn">
             <div class="flex justify-between p-6 border-b border-gray-200">
                 <h2 class="text-xl font-semibold text-gray-800">Categories Management</h2>
-                <button onclick="openModal('addCategoryModal')" class="bg-primary px-4 py-2 rounded-lg hover:bg-blue-500 flex items-center text-white">
+                <button onclick="openModal('addCategoryModal')" class="bg-teal-500 px-4 py-2 rounded-lg hover:bg-teal-600 flex items-center text-white transition duration-300">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -188,7 +189,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
         </div>
 
         <!-- Recent Users -->
-        <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+        <div class="bg-white p-6 rounded-lg shadow-sm mb-8 animate__animated animate__fadeIn">
             <h2 class="text-xl font-bold mb-4">Recent Users</h2>
             <div class="overflow-x-auto">
                 <table class="w-full">
@@ -201,7 +202,6 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
                         </tr>
                     </thead>
                     <?php
-
                     $users = Admin::getallusers();
                     foreach ($users as $user) {
                     ?>
@@ -252,19 +252,18 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
                 </div>
                 <div class="flex justify-end space-x-4">
                     <button type="button" onclick="closeModal('addCategoryModal')" class="px-4 py-2 border rounded-lg">Cancel</button>
-                    <button type="submit" name="Category_submit" class="px-4 py-2 text-white bg-primary rounded-lg">Add Category</button>
+                    <button type="submit" name="Category_submit" class="px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600 transition duration-300">Add Category</button>
                 </div>
             </form>
         </div>
     </div>
-
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <img src="assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
+                    <img src="../assets/img/logo/logo2_footer.png" alt="Footer Logo" class="mb-4">
                     <p class="text-gray-400">The automated process starts as soon as your clothes go into the machine.</p>
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
@@ -309,11 +308,9 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
         </div>
     </footer>
 
-
-
     <!-- Scroll Up Button -->
     <div id="back-top" class="fixed bottom-4 right-4">
-        <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+        <a href="#" class="bg-teal-500 text-white p-3 rounded-full shadow-lg hover:bg-teal-600 transition duration-300">
             <i class="fas fa-level-up-alt"></i>
         </a>
     </div>

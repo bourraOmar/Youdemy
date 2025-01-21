@@ -1,4 +1,7 @@
 <?php
+
+require_once '../classes/cours.php';
+require_once '../classes/tag.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -13,7 +16,6 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Courses | Education</title>
 </head>
@@ -25,7 +27,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
         <div class="preloader-inner relative">
             <div class="preloader-circle animate-spin rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
             <div class="preloader-img absolute inset-0 flex justify-center items-center">
-                <img src="assets/img/logo/loder.png" alt="Loading..." class="h-8">
+                <img src="../assets/img/logo/loder.png" alt="Loading..." class="h-8">
             </div>
         </div>
     </div>
@@ -47,7 +49,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                         <a href="../pages/login.php" class="bg-teal-500 border border-teal-500 text-white px-4 py-2 rounded hover:bg-teal-500 hover:text-white transition duration-300">Log in</a>
                     <?php else: ?>
                         <div>
-                            <a href="../profdashboard/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../imgs/profile-major.svg" alt="Profile"></a>
+                            <a href="../pages/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../imgs/profile-major.svg" alt="Profile"></a>
                         </div>
                     <?php endif; ?>
 
@@ -92,18 +94,18 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                 $cours = VideoCours::showAllCours();
                 foreach ($cours as $cour) {
                 ?>
-                    <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
                         <!-- Course Thumbnail -->
                         <div class="relative">
                             <img src="<?php echo $cour->getcourseImage() ?>" alt="Course thumbnail" class="w-full h-48 object-cover" />
-                            <!-- course type -->
+                            <!-- Course Type Badge -->
                             <?php if ($cour->cours_type == 'video') { ?>
-                                <span class="absolute top-4 left-4 bg-white/90 px-2 py-1 rounded text-xs font-medium text-white bg-purple-600 rounded-full">
+                                <span class="absolute top-4 left-4 bg-teal-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                                     Video
                                 </span>
                             <?php } else if ($cour->cours_type == 'document') { ?>
-                                <span class="absolute top-4 left-4 bg-white/90 px-2 py-1 rounded text-xs font-medium text-white bg-green-600 rounded-full">
-                                    document
+                                <span class="absolute top-4 left-4 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                                    Document
                                 </span>
                             <?php } ?>
                         </div>
@@ -111,7 +113,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                         <div class="p-6">
                             <!-- Course Title -->
                             <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-semibold hover:text-purple-600 transition-colors">
+                                <h3 class="font-semibold text-teal-800 hover:text-teal-600 transition-colors">
                                     <?php echo strlen($cour->gettitle()) > 40 ? substr($cour->gettitle(), 0, 40) . '...' : $cour->gettitle(); ?>
                                 </h3>
                             </div>
@@ -145,18 +147,31 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
                                     $tags = Tag::gettagsforCours($cour->getId());
                                     foreach ($tags as $tag) {
                                     ?>
-                                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm"><?php echo strlen($tag->getname()) > 10 ? substr($tag->getname(), 0, 10) . '...' : $tag->getname(); ?></span>
+                                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+                                            <?php echo strlen($tag->getname()) > 10 ? substr($tag->getname(), 0, 10) . '...' : $tag->getname(); ?>
+                                        </span>
                                     <?php
                                     }
                                     ?>
                                 </div>
                             </div>
+
                             <!-- Price and Enroll Button -->
                             <div class="flex items-center justify-between mt-4">
-                                <span class="text-lg font-bold text-purple-600"><?php echo $cour->getprice() ?>$</span>
-                                <a href="../Handling/enrollHandle.php?course_id=<?php echo $cour->getId() ?>"><button class="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
-                                        Enroll Now
-                                    </button></a>
+                                <span class="text-lg font-bold text-teal-500"><?php echo $cour->getprice() ?>$</span>
+                                <?php if (!isset($_SESSION['user_role'])) : ?>
+                                    <a href="../pages/login.php">
+                                        <button class="bg-teal-500 text-white px-6 py-2 rounded-full hover:bg-teal-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+                                            Join Now
+                                        </button>
+                                    </a>
+                                <?php else : ?>
+                                    <a href="../Handling/enrollCours.php?course_id=<?php echo $cour->getId() ?>">
+                                        <button class="bg-teal-500 text-white px-6 py-2 rounded-full hover:bg-teal-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+                                            Enroll Now
+                                        </button>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -168,43 +183,70 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_status'] === 'suspended') 
         </div>
 
         <!-- Top Subjects Section -->
-        <div class="bg-gray-50 py-16">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold mb-4 animate__animated animate__fadeInDown">Explore Top Subjects</h2>
-                    <p class="text-gray-600 animate__animated animate__fadeInUp">Discover our most popular subjects and start learning today.</p>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    <!-- Subject Card -->
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden text-center hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
-                        <img src="assets/img/gallery/topic1.png" alt="Subject Image" class="w-full">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2">Programming</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-8">
+            <!-- Topic Cards -->
+            <div class="single-topic text-center mb-8">
+                <div class="topic-img relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <img src="../assets/img/gallery/topic1.png" alt="Topic 1" class="w-full h-48 object-cover">
+                    <div class="topic-content-box absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <div class="topic-content">
+                            <h3 class="text-white text-xl font-bold"><a href="#" class="hover:text-teal-300 transition-colors duration-300">Programming</a></h3>
                         </div>
                     </div>
-                    <!-- Repeat for other subjects -->
-                </div>
-                <div class="text-center mt-16">
-                    <a href="#" class="border border-teal-500 text-teal-500 px-6 py-2 rounded hover:bg-teal-500 hover:text-white transition duration-300">View More Subjects</a>
                 </div>
             </div>
+            <div class="single-topic text-center mb-8">
+                <div class="topic-img relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <img src="../assets/img/gallery/topic2.png" alt="Topic 2" class="w-full h-48 object-cover">
+                    <div class="topic-content-box absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <div class="topic-content">
+                            <h3 class="text-white text-xl font-bold"><a href="#" class="hover:text-teal-300 transition-colors duration-300">Programming</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single-topic text-center mb-8">
+                <div class="topic-img relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <img src="../assets/img/gallery/topic3.png" alt="Topic 3" class="w-full h-48 object-cover">
+                    <div class="topic-content-box absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <div class="topic-content">
+                            <h3 class="text-white text-xl font-bold"><a href="#" class="hover:text-teal-300 transition-colors duration-300">Programming</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single-topic text-center mb-8">
+                <div class="topic-img relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <img src="../assets/img/gallery/topic4.png" alt="Topic 4" class="w-full h-48 object-cover">
+                    <div class="topic-content-box absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <div class="topic-content">
+                            <h3 class="text-white text-xl font-bold"><a href="#" class="hover:text-teal-300 transition-colors duration-300">Programming</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        <div class="text-center mt-16">
+            <a href="#" class="border border-teal-500 text-teal-500 px-6 py-2 rounded hover:bg-teal-500 hover:text-white transition duration-300">View More Subjects</a>
+        </div>
+
 
         <!-- Services Section -->
         <div class="container mx-auto px-6 py-16">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInLeft">
-                    <img src="assets/img/icon/icon1.svg" alt="UX Courses" class="mx-auto mb-4 h-16 w-16">
+                    <img src="../assets/img/icon/icon1.svg" alt="UX Courses" class="mx-auto mb-4 h-16 w-16">
                     <h3 class="text-xl font-bold mb-2">60+ UX Courses</h3>
                     <p class="text-gray-600">The automated process all your website tasks.</p>
                 </div>
                 <div class="text-center bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
-                    <img src="assets/img/icon/icon2.svg" alt="Expert Instructors" class="mx-auto mb-4 h-16 w-16">
+                    <img src="../assets/img/icon/icon2.svg" alt="Expert Instructors" class="mx-auto mb-4 h-16 w-16">
                     <h3 class="text-xl font-bold mb-2">Expert Instructors</h3>
                     <p class="text-gray-600">The automated process all your website tasks.</p>
                 </div>
                 <div class="text-center bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInRight">
-                    <img src="assets/img/icon/icon3.svg" alt="Lifetime Access" class="mx-auto mb-4 h-16 w-16">
+                    <img src="../assets/img/icon/icon3.svg" alt="Lifetime Access" class="mx-auto mb-4 h-16 w-16">
                     <h3 class="text-xl font-bold mb-2">Lifetime Access</h3>
                     <p class="text-gray-600">The automated process all your website tasks.</p>
                 </div>
