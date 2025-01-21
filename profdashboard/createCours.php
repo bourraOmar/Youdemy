@@ -26,7 +26,6 @@ if ($_SESSION['user_status'] === 'waiting') {
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
@@ -67,30 +66,21 @@ if ($_SESSION['user_status'] === 'waiting') {
     </div>
 
     <!-- Header -->
-    <header class="bg-gradient-to-r from-teal-500 to-orange-500 shadow-lg sticky top-0 z-40">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="logo">
-                    <a href="../Youdemy/index.php"><img src="../assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+    <nav class="bg-gradient-to-r from-teal-500 to-orange-500 sticky shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-white">YouDemy</span>
                 </div>
-                <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="../profdashboard/dashboardTeacher.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Dashboard</a>
-                    <a href="../profdashboard/createCours.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Create Course</a>
-                    <a href="../profdashboard/myCourse.php" class="text-gray-700 hover:text-teal-500 transition duration-300">My Courses</a>
-                    <a href="../Handling/AuthHandl.php">
-                        <button class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">Logout</button>
+                <div class="flex items-center space-x-4">
+                    <span class="text-white">Welcome, <?php echo $_SESSION['user_nom'] . " " . $_SESSION['user_prenom'] ?></span>
+                    <a href="../Handling/authentification.php">
+                        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">Logout</button>
                     </a>
-                </nav>
-                <div class="md:hidden">
-                    <button class="mobile-menu-button">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 
     <?php
     if (isset($_SESSION['message'])) {
@@ -114,6 +104,22 @@ if ($_SESSION['user_status'] === 'waiting') {
     ?>
 
     <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg sticky min-h-full">
+            <div class="p-4">
+                <ul class="space-y-2">
+                    <a href="../profdashboard/dashboardTeacher.php">
+                        <li class="text-gray-600 p-2 rounded-lg hover:bg-teal-200 transition duration-300">Dashboard</li>
+                    </a>
+                    <a href="../profdashboard/createCours.php">
+                        <li class="bg-teal-100 text-teal-700 hover:bg-teal-50 p-2 rounded-lg transition duration-300">Create Course</li>
+                    </a>
+                    <a href="../profdashboard/myCourse.php">
+                        <li class="text-gray-600 hover:bg-teal-50 p-2 rounded-lg transition duration-300">My Courses</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
         <!-- Main Content -->
         <div class="flex-1 p-8">
             <div class="max-w-4xl mx-auto">

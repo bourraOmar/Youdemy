@@ -1,5 +1,6 @@
 <?php
 require_once '../classes/category.php';
+require_once '../classes/cours.php';
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -45,39 +46,49 @@ if ($_SESSION['user_status'] === 'waiting') {
         </div>
     </div>
 
+
     <!-- Header -->
-    <header class="bg-gradient-to-r from-teal-500 to-orange-500 shadow-lg sticky top-0 z-40">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
+    <nav class="bg-gradient-to-r from-teal-500 to-orange-500 sticky shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
                 <div class="logo">
                     <a href="../Youdemy/index.php"><img src="../assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
-                <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="../profdashboard/dashboardTeacher.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Dashboard</a>
-                    <a href="../profdashboard/createCours.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Create Course</a>
-                    <a href="../profdashboard/myCourse.php" class="text-gray-700 hover:text-teal-500 transition duration-300">My Courses</a>
-                    <a href="../Handling/AuthHandl.php">
-                        <button class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">Logout</button>
+                <div class="flex items-center space-x-4">
+                    <span class="text-white">Welcome, <?php echo $_SESSION['user_nom'] . " " . $_SESSION['user_prenom'] ?></span>
+                    <a href="../Handling/authentification.php">
+                        <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">Logout</button>
                     </a>
-                </nav>
-                <div class="md:hidden">
-                    <button class="mobile-menu-button">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 
     <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg sticky h-screen">
+            <div class="p-4">
+                <ul class="space-y-2">
+                    <a href="../profdashboard/dashboardTeacher.php">
+                        <li class="text-gray-600 p-2 rounded-lg hover:bg-teal-200 transition duration-300">Dashboard</li>
+                    </a>
+                    <a href="../profdashboard/createCours.php">
+                        <li class="text-gray-600 hover:bg-teal-50 p-2 rounded-lg transition duration-300">Create Course</li>
+                    </a>
+                    <a href="../profdashboard/myCourse.php">
+                        <li class="bg-teal-100 text-teal-700 hover:bg-teal-50 p-2 rounded-lg transition duration-300">My Courses</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
         <!-- Main Content -->
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-2xl font-bold text-teal-800">My Courses</h1>
                 <div class="flex space-x-4">
-                    <input type="text" placeholder="Search courses..." class="border p-2 rounded-md focus:ring-2 focus:ring-orange-500" />
+                    <form action="../Handling/searchCours.php" method="get">
+                        <input type="text" name="searchfield" placeholder="Search courses..." class="border p-2 rounded-md focus:ring-2 focus:ring-orange-500" />
+                    </form>
                     <select class="border p-2 rounded-md focus:ring-2 focus:ring-orange-500">
                         <option>All Categories</option>
                         <?php
@@ -101,23 +112,51 @@ if ($_SESSION['user_status'] === 'waiting') {
                 foreach ($courses as $cours) {
                     $counts = Cours::CountenrollCourses($cours->getId());
                 ?>
-                    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 animate__animated animate__fadeInUp">
+                        <!-- Course Image -->
                         <img src="<?php echo $cours->getcourseImage() ?>" alt="Course thumbnail" class="w-full h-48 object-cover" />
+
+                        <!-- Course Details -->
                         <div class="p-6">
+                            <!-- Course Title -->
                             <div class="flex justify-between items-start mb-4">
-                                <h3 class="font-semibold"><?php echo $cours->gettitle() ?></h3>
+                                <h3 class="text-xl font-semibold text-gray-800 hover:text-teal-600 transition-colors duration-300">
+                                    <?php echo $cours->gettitle() ?>
+                                </h3>
                             </div>
-                            <div class="flex items-center mb-4">
-                                <span class="text-gray-600"><?php echo $counts['enroll_Count']  ?> students</span>
-                                <span class="text-gray-400 mx-2">•</span>
-                                <?php  ?>
-                                <span class="text-gray-600"></span>
+
+                            <!-- Course Stats -->
+                            <div class="flex items-center mb-4 text-sm text-gray-600">
+                                <span><?php echo $counts['enroll_Count'] ?> students</span>
+                                <span class="mx-2">•</span>
                             </div>
+
+                            <!-- Price and Actions -->
                             <div class="flex justify-between items-center">
-                                <span class="text-purple-600 font-bold"><?php echo $cours->getprice() ?></span>
-                                <div class="flex space-x-2">
-                                    <a href="../Handling/editCourseHandling.php?id=<?php echo $cours->getId() ?>"><button class="text-blue-600 hover:text-blue-800">Edit</button></a>
-                                    <a href="../Handling/deletecoursehandling.php?id=<?php echo $cours->getId() ?>"><button class="text-gray-600 hover:text-gray-800">Delete</button></a>
+                                <!-- Price -->
+                                <span class="text-teal-600 font-bold text-lg">
+                                    <?php echo $cours->getprice() ?>$
+                                </span>
+
+                                <!-- Action Buttons -->
+                                <div class="flex space-x-4">
+                                    <!-- Edit Button -->
+                                    <a href="../Handling/editeCours.php?id=<?php echo $cours->getId() ?>">
+                                        <button class="text-blue-600 hover:text-blue-800 transition-colors duration-300">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                            </svg>
+                                        </button>
+                                    </a>
+
+                                    <!-- Delete Button -->
+                                    <a href="../Handling/deleteCours.php?id=<?php echo $cours->getId() ?>">
+                                        <button class="text-red-600 hover:text-red-800 transition-colors duration-300">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

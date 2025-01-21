@@ -9,7 +9,6 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
         header("Location: ../Youdemy/pages/status_banned.php");
         exit();
     }
-
     if ($_SESSION['user_role'] == 1) {
         header('Location: ../Youdemy/pages/adminDashboard.php');
         exit();
@@ -31,39 +30,42 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
     <title>Courses | Education</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gradient-to-r from-orange-50 to-teal-50">
     <!-- Preloader -->
     <div id="preloader-active" class="fixed inset-0 w-full h-full bg-white flex items-center justify-center z-50">
         <div class="preloader-inner relative">
             <div class="preloader-circle animate-spin rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
             <div class="preloader-img absolute inset-0 flex justify-center items-center">
-                <img src="assets/img/logo/loder.png" alt="Loading..." class="h-8">
+                <img src="../Youdemy/assets/img/logo/loder.png" alt="Loading..." class="h-8">
             </div>
         </div>
     </div>
 
     <!-- Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-teal-500 to-orange-500 text-white sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="logo">
-                    <a href="../Youdemy/index.php"><img src="assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
+                    <a href="../Youdemy/index.php"><img src="../Youdemy/assets/img/logo/logo.png" alt="Logo" class="h-8"></a>
                 </div>
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                    <a href="../Youdemy/pages/cours.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Courses</a>
-                    <a href="../pages/about.php" class="text-gray-700 hover:text-blue-500 transition duration-300">About</a>
-                    <a href="../pages/contact.php" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
+                    <a href="index.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Home</a>
+                    <a href="../Youdemy/pages/cours.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Courses</a>
+                    <a href="../Youdemy/pages/about.php" class="text-gray-700 hover:text-teal-500 transition duration-300">About</a>
+                    <a href="../Youdemy/pages/contact.php" class="text-gray-700 hover:text-teal-500 transition duration-300">Contact</a>
 
                     <?php if (!isset($_SESSION['user_role'])): ?>
-                        <a href="./pages/sign_up.php" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">Join</a>
-                        <a href="./pages/login.php" class="bg-transparent border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Log in</a>
+                        <a href="./pages/sign_up.php" class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition duration-300">Join</a>
+                        <a href="./pages/login.php" class="bg-teal-500 border border-teal-500 text-white px-4 py-2 rounded hover:bg-teal-500 hover:text-white transition duration-300">Log in</a>
+                    <?php elseif($_SESSION['']): ?>
+                        <div>
+                            <a href="../Youdemy/pages/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../youdemy/imgs/profile-major.svg" alt="Profile"></a>
+                        </div>
                     <?php else: ?>
                         <div>
-                            <a href="../Youdemy/profdashboard/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../youdemy/imgs/profile-major.svg" alt="Profile"></a>
+                            <a href="../Youdemy/pages/etudient.php"><img width="25px" class="bg-white rounded-full shadow-soft" src="../youdemy/imgs/profile-major.svg" alt="Profile"></a>
                         </div>
                     <?php endif; ?>
-
                 </nav>
                 <?php
                 if (isset($_SESSION['message'])) {
@@ -99,11 +101,11 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-24">
+        <section class="bg-gradient-to-r from-teal-500 to-orange-500 text-white py-24">
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Online Learning Platform</h1>
                 <p class="text-xl mb-8 animate__animated animate__fadeInUp">Build skills with courses, certificates, and degrees online from world-class universities and companies.</p>
-                <a href="#" class="bg-white text-blue-500 px-6 py-2 rounded hover:bg-gray-100 transition duration-300 animate__animated animate__fadeInUp">Join for Free</a>
+                <a href="#" class="bg-white text-teal-500 px-6 py-2 rounded hover:bg-gray-100 transition duration-300 animate__animated animate__fadeInUp">Join for Free</a>
             </div>
         </section>
 
@@ -111,17 +113,17 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
         <div class="container mx-auto px-6 py-16">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInLeft">
-                    <img src="assets/img/icon/icon1.svg" alt="UX Courses" class="mx-auto mb-4 h-16 w-16">
+                    <img src="../Youdemy/assets/img/icon/icon1.svg" alt="UX Courses" class="mx-auto mb-4 h-16 w-16">
                     <h3 class="text-xl font-bold mb-2">60+ UX Courses</h3>
                     <p class="text-gray-600">The automated process all your website tasks.</p>
                 </div>
                 <div class="text-center bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
-                    <img src="assets/img/icon/icon2.svg" alt="Expert Instructors" class="mx-auto mb-4 h-16 w-16">
+                    <img src="../Youdemy/assets/img/icon/icon2.svg" alt="Expert Instructors" class="mx-auto mb-4 h-16 w-16">
                     <h3 class="text-xl font-bold mb-2">Expert Instructors</h3>
                     <p class="text-gray-600">The automated process all your website tasks.</p>
                 </div>
                 <div class="text-center bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 animate__animated animate__fadeInRight">
-                    <img src="assets/img/icon/icon3.svg" alt="Lifetime Access" class="mx-auto mb-4 h-16 w-16">
+                    <img src="../Youdemy/assets/img/icon/icon3.svg" alt="Lifetime Access" class="mx-auto mb-4 h-16 w-16">
                     <h3 class="text-xl font-bold mb-2">Lifetime Access</h3>
                     <p class="text-gray-600">The automated process all your website tasks.</p>
                 </div>
@@ -135,7 +137,7 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Course Card -->
                     <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 animate__animated animate__fadeInUp">
-                        <img src="assets/img/gallery/featured1.png" alt="Course Image" class="w-full">
+                        <img src="../Youdemy/assets/img/gallery/featured1.png" alt="Course Image" class="w-full">
                         <div class="p-6">
                             <p class="text-gray-600">User Experience</p>
                             <h3 class="text-xl font-bold mb-2">Fundamental of UX for Application Design</h3>
@@ -145,9 +147,9 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
                                     <span class="text-yellow-400">★★★★☆</span>
                                     <span class="text-gray-600 ml-2">(4.5)</span>
                                 </div>
-                                <span class="text-blue-500 font-bold">$135</span>
+                                <span class="text-teal-500 font-bold">$135</span>
                             </div>
-                            <a href="#" class="border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition duration-300">Find out more</a>
+                            <a href="#" class="border border-teal-500 text-teal-500 px-4 py-2 rounded hover:bg-teal-500 hover:text-white transition duration-300">Find out more</a>
                         </div>
                     </div>
                     <!-- Repeat for other courses -->
@@ -163,21 +165,21 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
                     <p class="text-gray-600 mb-8 animate__animated animate__fadeInLeft">The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.</p>
                     <ul class="space-y-4 animate__animated animate__fadeInLeft">
                         <li class="flex items-center">
-                            <img src="assets/img/icon/right-icon.svg" alt="Check" class="mr-2">
+                            <img src="../Youdemy/assets/img/icon/right-icon.svg" alt="Check" class="mr-2">
                             <p class="text-gray-600">Techniques to engage effectively with vulnerable children and young people.</p>
                         </li>
                         <li class="flex items-center">
-                            <img src="assets/img/icon/right-icon.svg" alt="Check" class="mr-2">
+                            <img src="../Youdemy/assets/img/icon/right-icon.svg" alt="Check" class="mr-2">
                             <p class="text-gray-600">Join millions of people from around the world learning together.</p>
                         </li>
                         <li class="flex items-center">
-                            <img src="assets/img/icon/right-icon.svg" alt="Check" class="mr-2">
+                            <img src="../Youdemy/assets/img/icon/right-icon.svg" alt="Check" class="mr-2">
                             <p class="text-gray-600">Online learning is as easy and natural.</p>
                         </li>
                     </ul>
                 </div>
                 <div class="md:w-1/2 mt-8 md:mt-0 animate__animated animate__fadeInRight">
-                    <img src="assets/img/gallery/about.png" alt="About Image" class="rounded-lg shadow-lg">
+                    <img src="../Youdemy/assets/img/gallery/about3.png" alt="About Image" >
                 </div>
             </div>
         </section>
@@ -227,7 +229,7 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
                     </div>
                 </div>
                 <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                    <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-blue-500 hover:text-blue-400">Colorlib</a></p>
+                    <p class="text-gray-400">© 2023 All rights reserved | This template is made with <i class="fa fa-heart text-red-500"></i> by <a href="https://colorlib.com" class="text-teal-500 hover:text-teal-400">Colorlib</a></p>
                 </div>
             </div>
         </footer>
@@ -235,7 +237,7 @@ if (isset($_SESSION['user_status']) && isset($_SESSION['user_role'])) {
 
     <!-- Scroll Up Button -->
     <div id="back-top" class="fixed bottom-4 right-4">
-        <a href="#" class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300">
+        <a href="#" class="bg-teal-500 text-white p-3 rounded-full shadow-lg hover:bg-teal-600 transition duration-300">
             <i class="fas fa-level-up-alt"></i>
         </a>
     </div>
